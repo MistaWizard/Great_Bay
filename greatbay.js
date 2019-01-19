@@ -5,6 +5,8 @@ const keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+// const mysqlDB = new Mysql(keys.mysqlDB);
+
 var connection = mysql.createConnection({
     host: "localhost",
   
