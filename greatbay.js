@@ -5,7 +5,7 @@ const keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// const mysqlDB = new Mysql(keys.mysqlDB);
+const pwd = process.env.MYSQL_PWD;
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
     user: "root",
   
     // Your password
-    password: process.env.MYSQL_PWD,
+    password: pwd,
     database: "greatBay_db"
 });
 
