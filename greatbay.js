@@ -1,3 +1,7 @@
+require("dotenv").config();
+
+// Our requirements
+const keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -11,6 +15,18 @@ var connection = mysql.createConnection({
     user: "root",
   
     // Your password
-    password: "",
+    password: process.env.MYSQL_PWD,
     database: "greatBay_db"
 });
+
+function readProducts() {
+    console.log("Selecting all auctions...\n");
+    connection.query("SELECT * FROM auctions", function(err, res) {
+      if (err) throw err;
+      // Log all results of the SELECT statement
+      console.log(res);
+      connection.end();
+    });
+};
+
+readProducts();

@@ -9,6 +9,7 @@
   "author": "Tyler",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^6.2.0",
     "inquirer": "^6.2.1",
     "mysql": "^2.16.0"
   }
