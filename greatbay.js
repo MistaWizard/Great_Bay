@@ -5,41 +5,68 @@ const keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-const pwd = process.env.MYSQL_PWD;
+const pwd = keys.mysqlDB.password;
 
 var connection = mysql.createConnection({
-    host: "localhost",
-  
-    // Your port; if not 3306
-    port: 3306,
-  
-    // Your username
-    user: "root",
-  
-    // Your password
-    password: pwd,
-    database: "greatBay_db"
+  host: "localhost",
+
+  // Your port; if not 3306
+  port: 3306,
+
+  // Your username
+  user: "root",
+
+  // Your password
+  password: pwd ,
+  database: "greatBay_db"
 });
 
+
+// variables to communicate with the command line
+var nodeArgs = process.argv;
+var action = process.argv[2];
+var value = "";
+
+// Allowing multiples words on the command line
+for (var i = 3; i < nodeArgs.length; i++) {
+
+  if (i > 3 && i < nodeArgs.length) {
+    value = value + "+" + nodeArgs[i];
+  }
+  else {
+    value += nodeArgs[i];
+  }
+}
+
 // Can we define readProducts as a var, to call from later functions? -robert
+switch (action) {
+
+  case "auction-bid":
+    auctionBid();
+    break;
+
+  case "select-auction":
+    readProducts();
+    break;
+}
 
 function readProducts() {
-    console.log("Selecting all auctions...\n");
-    connection.query("SELECT * FROM auctions", function(err, res) {
-      if (err) throw err;
-      // Log all results of the SELECT statement
-      console.log(res);
-      connection.end();
-    });
+  console.log("Selecting all auctions...\n");
+  connection.query("SELECT * FROM auctions", function (err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    connection.end();
+  });
 };
 
-readProducts();
+//readProducts();
 
 //************************************************************************************ */
 
 // function to get all items available for bidding, and allow you to place a bid
 // auctionBid should be called in the opening prompt
-var auctionBid = function () {
+function  auctionBid() {
   // query DB for available items/auctions
   connection.query("SELECT * FROM auctions", function (err, res) {
     if (err) throw err;
@@ -94,4 +121,4 @@ var auctionBid = function () {
 };
 
 // restart the ACTION!
-readProducts();
+//readProducts();
